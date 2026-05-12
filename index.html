@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es-CU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dari's Dental — «El tiempo lo cura todo… menos las caries, esas las cura el Dr. Torres». Estética dental con el Dr. Torres (EGI). La Habana. WhatsApp.">
+  <meta name="el-toque-token" content="">
+  <title>Dari's Dental | Dr. Torres — Estética dental</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <link rel="preload" href="images/logo.png" as="image">
+  <link rel="preload" href="images/hero-mobile.jpg" as="image" media="(max-width: 767px)">
+  <link rel="preload" href="images/hero-desktop.jpg" as="image" media="(min-width: 768px)">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'dental-blue': '#0077b6',
+            'dental-blue-dark': '#005a8c',
+            'dental-accent': '#48cae4',
+            'soft-gray': '#f1f5f9',
+            'soft-gray-dark': '#64748b',
+            'navy': '#0a1628'
+          },
+          fontFamily: {
+            display: ['Fraunces', 'Georgia', 'ui-serif', 'serif'],
+            sans: ['DM Sans', 'system-ui', 'Segoe UI', 'sans-serif']
+          },
+          boxShadow: {
+            'glow': '0 0 40px -10px rgba(0, 119, 182, 0.45)',
+            'card': '0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 12px 24px -8px rgba(15, 23, 42, 0.08)',
+            'card-hover': '0 12px 40px -12px rgba(0, 119, 182, 0.2), 0 4px 6px -1px rgba(15, 23, 42, 0.06)'
+          },
+          backgroundImage: {
+            'mesh': 'radial-gradient(at 80% 0%, rgba(72, 202, 228, 0.15) 0px, transparent 50%), radial-gradient(at 0% 50%, rgba(0, 119, 182, 0.12) 0px, transparent 45%), radial-gradient(at 100% 100%, rgba(0, 90, 140, 0.08) 0px, transparent 40%)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+    .hero-bg {
+      background-image:
+        linear-gradient(125deg, rgba(10, 22, 40, 0.88) 0%, rgba(0, 90, 140, 0.82) 38%, rgba(0, 119, 182, 0.55) 72%, rgba(72, 202, 228, 0.2) 100%),
+        var(--hero-img-mobile);
+      background-size: cover;
+      background-position: center;
+    }
+    @media (min-width: 768px) {
+      .hero-bg {
+        background-image:
+          linear-gradient(125deg, rgba(10, 22, 40, 0.88) 0%, rgba(0, 90, 140, 0.82) 38%, rgba(0, 119, 182, 0.55) 72%, rgba(72, 202, 228, 0.2) 100%),
+          var(--hero-img-desktop);
+      }
+    }
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 20%, transparent 75%);
+    }
+    details.faq-item > summary { list-style: none; }
+    details.faq-item > summary::-webkit-details-marker { display: none; }
+    details.faq-item .faq-chevron { transition: transform 0.25s ease; }
+    details.faq-item[open] .faq-chevron { transform: rotate(180deg); }
+    details.faq-item[open] { box-shadow: 0 12px 40px -16px rgba(0, 119, 182, 0.18); }
+    .service-card-img { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+    article.service-card:hover .service-card-img { transform: scale(1.06); }
+    #nav-mobile-panel:not(.hidden) { animation: nav-panel-in 0.2s ease-out; }
+    @keyframes nav-panel-in {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800 antialiased">
+
+  <header class="sticky top-0 z-50 border-b border-slate-200/70 bg-white shadow-sm backdrop-blur-md">
+    <div class="relative mx-auto max-w-5xl px-4">
+      <div class="flex items-center justify-between gap-2 py-3 md:gap-4">
+        <a href="#inicio" class="flex min-w-0 flex-1 items-center gap-3 md:flex-none md:max-w-[min(100%,28rem)]">
+          <img
+            src="images/logo.png"
+            alt="Dari's Dental — logotipo"
+            class="h-12 w-auto max-w-[min(56vw,240px)] shrink-0 object-contain object-left sm:h-14 sm:max-w-[280px] md:h-[4.25rem] md:max-w-[min(100%,340px)]"
+            width="320"
+            height="96"
+            decoding="async"
+            fetchpriority="high">
+        </a>
+
+        <button type="button" id="nav-menu-toggle" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-navy shadow-sm transition hover:bg-slate-50 md:hidden" aria-expanded="false" aria-controls="nav-mobile-panel" aria-label="Abrir menú">
+          <svg id="nav-icon-menu" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg id="nav-icon-close" class="hidden h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+
+        <nav class="hidden flex-1 items-center justify-center gap-1 md:flex" aria-label="Principal">
+          <a href="#faq" class="rounded-full px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-dental-blue">Preguntas</a>
+          <a href="#servicios" class="rounded-full px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-dental-blue">Servicios</a>
+          <a href="#precios" class="rounded-full px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-dental-blue">Precios</a>
+          <a href="#agenda" class="rounded-full px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-dental-blue">Agendar</a>
+        </nav>
+
+        <a href="#lead" class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-dental-blue to-dental-blue-dark px-3 py-2.5 text-sm font-semibold text-white shadow-md shadow-dental-blue/30 ring-2 ring-white/20 transition hover:brightness-110 sm:gap-2 sm:px-4">
+          <svg class="h-4 w-4 shrink-0 opacity-90" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span class="max-[360px]:sr-only">WhatsApp</span>
+        </a>
+      </div>
+
+      <nav id="nav-mobile-panel" class="absolute left-0 right-0 top-full z-[60] hidden border-b border-slate-200/90 bg-white shadow-lg md:hidden" aria-label="Menú móvil">
+        <div class="flex max-h-[min(70vh,24rem)] flex-col overflow-y-auto px-2 py-2">
+          <a href="#faq" class="rounded-xl px-4 py-3.5 text-base font-medium text-slate-800 transition hover:bg-slate-100 hover:text-dental-blue">Preguntas</a>
+          <a href="#servicios" class="rounded-xl px-4 py-3.5 text-base font-medium text-slate-800 transition hover:bg-slate-100 hover:text-dental-blue">Servicios</a>
+          <a href="#precios" class="rounded-xl px-4 py-3.5 text-base font-medium text-slate-800 transition hover:bg-slate-100 hover:text-dental-blue">Precios</a>
+          <a href="#agenda" class="rounded-xl px-4 py-3.5 text-base font-medium text-slate-800 transition hover:bg-slate-100 hover:text-dental-blue">Agendar</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <div id="nav-backdrop" class="fixed inset-0 z-40 hidden bg-navy/45 backdrop-blur-[1px] md:hidden" aria-hidden="true"></div>
+
+  <main id="inicio">
+    <!-- Hero: fondos en images/ — móvil &lt;768px y escritorio; cambie nombre/extensión si sus archivos difieren -->
+    <section
+      class="hero-bg relative overflow-hidden pb-28 pt-14 sm:pb-36 sm:pt-20"
+      style="--hero-img-mobile: url('images/hero-bg-movil.png'); --hero-img-desktop: url('images/hero-bg-pc.png');"
+      aria-label="Cabecera">
+      <div class="hero-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-dental-accent/25 blur-3xl" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-dental-blue/30 blur-3xl" aria-hidden="true"></div>
+
+      <div class="relative mx-auto max-w-5xl px-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/95 backdrop-blur-sm">
+            <span class="h-1.5 w-1.5 rounded-full bg-dental-accent shadow-[0_0_8px_#48cae4]" aria-hidden="true"></span>
+            La Habana · Consulta privada
+          </span>
+        </div>
+
+        <h1 class="mt-6 max-w-3xl font-display text-[1.55rem] font-semibold leading-[1.2] tracking-tight text-white sm:text-4xl sm:leading-[1.15] lg:text-[2.75rem]">
+          <span class="block text-white/95">El tiempo lo cura todo…</span>
+          <span class="mt-2 block text-white/90 sm:mt-3">
+            menos las caries,
+            <span class="text-dental-accent"> esas las cura el Dr. Torres</span>
+          </span>
+        </h1>
+        <p class="mt-6 max-w-xl border-l-4 border-dental-accent/80 pl-4 text-base leading-relaxed text-white/80 sm:text-lg">
+          <strong class="font-semibold text-white">Dari's Dental</strong> — Dr. Torres, especialista en EGI, con posgrados en Venezuela y Brasil. Ciencia, estética y una experiencia tranquila desde la primera visita.
+        </p>
+
+        <div class="mt-10 flex max-w-xl flex-col gap-4 sm:flex-row sm:items-stretch">
+          <a href="#lead" class="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-white px-6 py-4 text-center text-sm font-bold text-dental-blue-dark shadow-card transition hover:shadow-card-hover">
+            <svg class="h-5 w-5 text-green-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Pedir cita por WhatsApp
+          </a>
+          <a href="#faq" class="inline-flex flex-1 items-center justify-center rounded-2xl border-2 border-white/35 bg-white/5 px-6 py-4 text-center text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15">
+            Ver preguntas clave
+          </a>
+        </div>
+
+        <dl class="mt-12 grid max-w-2xl grid-cols-2 gap-4 sm:grid-cols-3">
+          <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-md">
+            <dt class="text-[11px] font-semibold uppercase tracking-wide text-white/70">Enfoque</dt>
+            <dd class="mt-1 font-display text-lg font-semibold text-white">EGI + estética</dd>
+          </div>
+          <div class="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-md">
+            <dt class="text-[11px] font-semibold uppercase tracking-wide text-white/70">Primera visita</dt>
+            <dd class="mt-1 font-display text-lg font-semibold text-white">Limpieza profunda</dd>
+          </div>
+          <div class="col-span-2 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-md sm:col-span-1">
+            <dt class="text-[11px] font-semibold uppercase tracking-wide text-white/70">Horario</dt>
+            <dd class="mt-1 font-display text-lg font-semibold text-white">Mar–Dom · 9–6</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Perfil — reemplazar src -->
+    <section class="relative z-10 -mt-16 px-4 pb-4 sm:-mt-20" id="doctor">
+      <div class="mx-auto max-w-5xl overflow-hidden rounded-3xl bg-white shadow-card ring-1 ring-slate-200/80">
+        <div class="grid gap-0 lg:grid-cols-[minmax(0,340px)_1fr]">
+          <div class="relative min-h-[280px] bg-gradient-to-br from-slate-100 to-slate-200 lg:min-h-full">
+            <div class="absolute inset-4 overflow-hidden rounded-2xl shadow-inner ring-1 ring-slate-300/40 lg:inset-6">
+              <img
+                src="images/doctor.png"
+                width="700"
+                height="875"
+                class="h-full w-full object-cover object-top"
+                alt="Retrato profesional del Dr. Torres, dentista"
+                loading="lazy"
+                decoding="async">
+            </div>
+            <div class="pointer-events-none absolute bottom-6 left-6 right-6 rounded-2xl bg-gradient-to-t from-navy/80 to-transparent p-4 pt-12 lg:hidden">
+              <p class="font-display text-lg font-semibold text-white">Dr. Torres</p>
+              <p class="text-xs text-white/85">Especialista en EGI</p>
+            </div>
+          </div>
+          <div class="p-8 sm:p-10 lg:pl-8">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-dental-blue">Quién le atiende</p>
+            <h2 class="mt-2 font-display text-3xl font-semibold tracking-tight text-navy sm:text-4xl">Dr. Torres</h2>
+            <p class="mt-2 text-base font-medium text-slate-600">Especialista en EGI · Estética dental de alto nivel</p>
+            <p class="mt-5 leading-relaxed text-slate-600">
+              Formación sólida y posgrados en <strong class="font-semibold text-slate-800">Venezuela</strong> y <strong class="font-semibold text-slate-800">Brasil</strong>. En <strong class="font-semibold text-dental-blue">Dari's Dental</strong> cada plan combina criterio clínico y sensibilidad estética: resultados que se ven bien y se sostienen en el tiempo.
+            </p>
+            <ul class="mt-8 space-y-4">
+              <li class="flex gap-4 rounded-2xl border border-slate-100 bg-soft-gray/80 p-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-dental-blue/10 text-dental-blue" aria-hidden="true">
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </span>
+                <span class="text-sm leading-relaxed text-slate-600"><strong class="text-slate-900">Primera visita:</strong> comenzamos con una <strong class="text-dental-blue-dark">Limpieza Profunda</strong> para valoración clínica completa.</span>
+              </li>
+              <li class="flex gap-4 rounded-2xl border border-slate-100 bg-soft-gray/80 p-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-dental-blue/10 text-dental-blue" aria-hidden="true">
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </span>
+                <span class="text-sm leading-relaxed text-slate-600"><strong class="text-slate-900">Organización por días:</strong> estomatología general y domingo dedicado a ortodoncia (ver horarios).</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horarios -->
+    <section class="bg-mesh py-16 sm:py-20" aria-labelledby="horarios-titulo">
+      <div class="mx-auto max-w-5xl px-4">
+        <div class="max-w-2xl">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-dental-blue">Organización</p>
+          <h2 id="horarios-titulo" class="mt-2 font-display text-3xl font-semibold tracking-tight text-navy sm:text-4xl">Horario por especialidad</h2>
+          <p class="mt-3 text-slate-600">Así sabes cuándo reservar según lo que necesitas.</p>
+        </div>
+        <div class="mt-10 grid gap-5 sm:grid-cols-3">
+          <div class="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+            <div class="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-dental-blue/10 text-dental-blue transition group-hover:bg-dental-blue group-hover:text-white" aria-hidden="true">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M8 7V5m8 2V5M5 9h14M5 19h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-navy">Martes a sábado</h3>
+            <p class="mt-3 text-sm font-medium text-dental-blue">9:00 a. m. — 6:00 p. m.</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">Estomatología general y procedimientos de consulta.</p>
+          </div>
+          <div class="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-card transition hover:-translate-y-0.5 hover:shadow-card-hover">
+            <div class="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-dental-blue/10 text-dental-blue transition group-hover:bg-dental-blue group-hover:text-white" aria-hidden="true">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-navy">Domingo</h3>
+            <p class="mt-3 text-sm font-medium text-dental-blue">9:00 a. m. — 6:00 p. m.</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">Ortodoncia y seguimiento de brackets.</p>
+          </div>
+          <div class="relative overflow-hidden rounded-3xl border border-amber-200/80 bg-gradient-to-br from-amber-50 to-orange-50/50 p-6 shadow-card">
+            <div class="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-100 text-amber-700" aria-hidden="true">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 3a9 9 0 109 9"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-amber-900">Lunes</h3>
+            <p class="mt-3 text-sm font-semibold text-amber-800/90">Cerrado al público</p>
+            <p class="mt-2 text-sm leading-relaxed text-amber-900/80">Día de gestión de turnos y planificación clínica.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ acordeón -->
+    <section class="border-y border-slate-200/80 bg-white py-16 sm:py-20" id="faq">
+      <div class="mx-auto max-w-3xl px-4">
+        <div class="text-center">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-dental-blue">Filtro rápido</p>
+          <h2 class="mt-2 font-display text-3xl font-semibold tracking-tight text-navy sm:text-4xl">Antes de agendar</h2>
+          <p class="mx-auto mt-3 max-w-lg text-slate-600">Lo esencial, sin rodeos. Si encaja con lo que buscas, el siguiente paso es el formulario de WhatsApp.</p>
+        </div>
+
+        <div class="mt-12 space-y-3">
+          <details class="faq-item group overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50/50 transition" open>
+            <summary class="flex cursor-pointer select-none items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+              <span class="font-display text-lg font-semibold text-navy">¿Dónde están?</span>
+              <svg class="faq-chevron h-5 w-5 shrink-0 text-dental-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="space-y-3 border-t border-slate-200/80 px-5 pb-5 pt-2 text-sm leading-relaxed text-slate-600 sm:px-6">
+              <p>Atendemos en <strong class="text-slate-900">La Habana, Cuba</strong>. Por seguridad y privacidad, la dirección exacta y las referencias de llegada se envían <strong class="text-slate-900">solo después de confirmar la cita</strong> por WhatsApp.</p>
+              <div class="rounded-2xl border border-dental-blue/15 bg-dental-blue/5 p-4 text-xs leading-relaxed">
+                <strong class="text-navy">Privacidad (ubicación):</strong> no publicamos la ubicación precisa en redes ni en esta web. Recibirá los datos de acceso una vez coordinado el turno, para proteger a quienes ya están en tratamiento.
+              </div>
+            </div>
+          </details>
+
+          <details class="faq-item overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50/50 transition">
+            <summary class="flex cursor-pointer select-none items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+              <span class="font-display text-lg font-semibold text-navy">¿Qué hacen?</span>
+              <svg class="faq-chevron h-5 w-5 shrink-0 text-dental-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="border-t border-slate-200/80 px-5 pb-5 pt-2 text-sm leading-relaxed text-slate-600 sm:px-6">
+              <p>Odontología con enfoque estético: higiene avanzada, blanqueamiento, empastes y reconstrucciones, ortodoncia, diseño de sonrisa y más. Todo paciente nuevo inicia con <strong class="text-slate-900">Limpieza Profunda</strong> como base de diagnóstico y plan personalizado.</p>
+            </div>
+          </details>
+
+          <details class="faq-item overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50/50 transition">
+            <summary class="flex cursor-pointer select-none items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+              <span class="font-display text-lg font-semibold text-navy">¿Precios?</span>
+              <svg class="faq-chevron h-5 w-5 shrink-0 text-dental-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="border-t border-slate-200/80 px-5 pb-5 pt-2 text-sm leading-relaxed text-slate-600 sm:px-6">
+              <p>Referencias en <strong class="text-slate-900">USD</strong> y estimado en <strong class="text-slate-900">CUP</strong> según la mediana informal de <strong class="text-slate-900">El Toque</strong>. Los montos finales dependen de la valoración clínica.</p>
+            </div>
+          </details>
+
+          <details class="faq-item overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50/50 transition">
+            <summary class="flex cursor-pointer select-none items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5">
+              <span class="font-display text-lg font-semibold text-navy">¿Cómo agendar?</span>
+              <svg class="faq-chevron h-5 w-5 shrink-0 text-dental-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="border-t border-slate-200/80 px-5 pb-5 pt-2 text-sm leading-relaxed text-slate-600 sm:px-6">
+              <p>Complete el formulario más abajo; abriremos WhatsApp con un mensaje profesional al <strong class="text-slate-900">+53 54783902</strong>. Le responderemos con disponibilidad y siguientes pasos.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="mt-10 overflow-hidden rounded-3xl border border-dental-blue/20 bg-gradient-to-br from-dental-blue/[0.07] via-white to-dental-accent/[0.06] p-6 shadow-inner sm:p-8">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-dental-blue text-white shadow-md shadow-dental-blue/30" aria-hidden="true">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display text-xl font-semibold text-navy">Requisitos el día de la cita</h3>
+              <ul class="mt-4 space-y-3 text-sm text-slate-700">
+                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dental-blue" aria-hidden="true"></span> Traer <strong class="text-slate-900">toallita o pañuelo</strong> para saliva.</li>
+                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dental-blue" aria-hidden="true"></span> <strong class="text-slate-900">Desayunar antes</strong> de la cita (salvo otra indicación acordada).</li>
+                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dental-blue" aria-hidden="true"></span> Si es hipertenso: <strong class="text-slate-900">medicación de la presión</strong> según su pauta habitual.</li>
+                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dental-blue" aria-hidden="true"></span> <strong class="text-slate-900">Puntualidad absoluta</strong>; el retraso puede implicar reprogramación.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios destacados: sustituya el atributo src de cada <img> por las fotos que le envíen (URL o ruta local). -->
+    <section class="bg-slate-100 py-16 sm:py-20" id="servicios">
+      <div class="mx-auto max-w-5xl px-4">
+        <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+          <div class="max-w-xl">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-dental-blue">Experiencia</p>
+            <h2 class="mt-2 font-display text-3xl font-semibold tracking-tight text-navy sm:text-4xl">Servicios destacados</h2>
+            
+          </div>
+          <a href="#precios" class="inline-flex items-center gap-2 self-start rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-navy shadow-sm transition hover:border-dental-blue/40 hover:text-dental-blue">Ver lista de precios</a>
+        </div>
+        <div class="mt-12 grid gap-6 lg:grid-cols-3">
+          <article class="service-card group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover">
+            <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
+              <div class="absolute left-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 font-display text-sm font-bold text-dental-blue shadow">01</div>
+              <img src="https://images.unsplash.com/photo-1606811971618-448beabc57e8?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Higiene dental y limpieza" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent"></div>
+              <p class="absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Limpieza e higiene</p>
+            </div>
+            <div class="p-5">
+              <p class="text-sm leading-relaxed text-slate-600">Limpieza profunda en la primera visita y mantenimiento con estándares clínicos.</p>
+            </div>
+          </article>
+          <article class="service-card group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover">
+            <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
+              <div class="absolute left-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 font-display text-sm font-bold text-dental-blue shadow">02</div>
+              <img src="https://images.unsplash.com/photo-1599813397634-43e56cbf90d5?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Ortodoncia y brackets" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent"></div>
+              <p class="absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Ortodoncia</p>
+            </div>
+            <div class="p-5">
+              <p class="text-sm leading-relaxed text-slate-600">Domingos dedicados a brackets y control del tratamiento.</p>
+            </div>
+          </article>
+          <article class="service-card group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover">
+            <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
+              <div class="absolute left-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 font-display text-sm font-bold text-dental-blue shadow">03</div>
+              <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47265fd?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Diseño de sonrisa" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent"></div>
+              <p class="absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Diseño de sonrisa</p>
+            </div>
+            <div class="p-5">
+              <p class="text-sm leading-relaxed text-slate-600">Estética dental integrada al rostro y a sus expectativas.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clínica — reemplazar src -->
+    <section class="relative overflow-hidden bg-navy py-16 text-white sm:py-24" id="clinica" aria-labelledby="clinica-titulo">
+      <div class="pointer-events-none absolute inset-0 bg-mesh opacity-40" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -right-32 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-dental-blue/30 blur-3xl" aria-hidden="true"></div>
+      <div class="relative mx-auto grid max-w-5xl items-center gap-10 px-4 lg:grid-cols-2 lg:gap-14">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-dental-accent">Instalaciones</p>
+          <h2 id="clinica-titulo" class="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">Clínica moderna, sensación tranquila</h2>
+          <p class="mt-5 text-sm leading-relaxed text-white/80 sm:text-base">
+            Materiales de calidad, bioseguridad y orden en cada giro. Buscamos que usted se sienta acompañado y seguro en cada etapa del plan.
+          </p>
+          <ul class="mt-8 space-y-3 text-sm text-white/85">
+            <li class="flex items-center gap-3"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-dental-accent" aria-hidden="true">✓</span> Ambiente limpio y controlado</li>
+            <li class="flex items-center gap-3"><span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-dental-accent" aria-hidden="true">✓</span> Flujo de cita pensado para esperar menos</li>
+          </ul>
+        </div>
+        <div class="relative">
+          <div class="absolute -inset-3 rounded-[2rem] bg-gradient-to-tr from-dental-accent/30 to-dental-blue/40 blur-2xl sm:-inset-4" aria-hidden="true"></div>
+          <div class="relative overflow-hidden rounded-3xl ring-2 ring-white/15 shadow-2xl">
+            <img
+              src="images/hero-bg-movil.png"
+              alt="Interior de clínica dental moderna"
+              class="aspect-[4/3] w-full object-cover sm:aspect-auto sm:h-80 lg:h-96"
+              width="1200"
+              height="800"
+              loading="lazy"
+              decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Precios -->
+    <section class="bg-white py-16 sm:py-20" id="precios">
+      <div class="mx-auto max-w-5xl px-4">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div class="max-w-xl">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-dental-blue">Inversión</p>
+            <h2 class="mt-2 font-display text-3xl font-semibold tracking-tight text-navy sm:text-4xl">Precios orientativos</h2>
+            
+          </div>
+          <div class="flex flex-col gap-3 lg:items-end">
+            <div class="inline-flex rounded-full border border-slate-200 bg-slate-100/90 p-1 shadow-inner" role="group" aria-label="Moneda">
+              <button type="button" id="currency-usd" class="rounded-full px-5 py-2.5 text-sm font-semibold">USD</button>
+              <button type="button" id="currency-cup" class="rounded-full px-5 py-2.5 text-sm font-medium">CUP</button>
+            </div>
+            <p id="rate-label" class="w-full text-left text-xs leading-relaxed text-soft-gray-dark md:max-w-xs md:text-right lg:max-w-sm" aria-live="polite">Tasa de cambio según El Toque: cargando…</p>
+          </div>
+        </div>
+
+        <div class="mt-10 space-y-8 md:space-y-10">
+          <!-- Móvil: dos bloques (servicios / artículos) -->
+          <div class="md:hidden space-y-6">
+            <div>
+              <h3 class="mb-2 font-display text-lg font-semibold text-navy">Servicios dentales</h3>
+              <div class="overflow-hidden rounded-3xl border border-slate-200/90 shadow-card">
+                <div id="price-mobile-banner-services" class="bg-gradient-to-r from-dental-blue-dark to-dental-blue px-4 py-3 text-center font-display text-sm font-semibold tracking-wide text-white">
+                  Precio USD
+                </div>
+                <div id="price-cards-mobile-services" class="divide-y divide-slate-100 bg-white"></div>
+              </div>
+            </div>
+            <div>
+              <h3 class="mb-2 font-display text-lg font-semibold text-navy">Venta artículos dentales</h3>
+              <div class="overflow-hidden rounded-3xl border border-slate-200/90 shadow-card">
+                <div id="price-mobile-banner-articles" class="bg-gradient-to-r from-dental-blue-dark to-dental-blue px-4 py-3 text-center font-display text-sm font-semibold tracking-wide text-white">
+                  Precio USD
+                </div>
+                <div id="price-cards-mobile-articles" class="divide-y divide-slate-100 bg-white"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Escritorio / tablet: dos tablas -->
+          <div class="hidden space-y-8 md:block">
+            <div>
+              <h3 class="mb-3 font-display text-xl font-semibold text-navy">Servicios dentales</h3>
+              <div class="overflow-hidden rounded-3xl border border-slate-200/90 shadow-card">
+                <table class="w-full min-w-0 text-left text-sm">
+                  <thead>
+                    <tr class="bg-gradient-to-r from-dental-blue-dark to-dental-blue text-white">
+                      <th class="px-4 py-3 font-display text-base font-semibold tracking-wide sm:px-5 sm:py-4">Servicio</th>
+                      <th id="price-column-heading-services" class="px-4 py-3 text-right font-display text-base font-semibold tracking-wide sm:px-5 sm:py-4">Precio USD</th>
+                    </tr>
+                  </thead>
+                  <tbody id="price-table-body-services" class="divide-y divide-slate-100 bg-white text-slate-700"></tbody>
+                </table>
+              </div>
+            </div>
+            <div>
+              <h3 class="mb-3 font-display text-xl font-semibold text-navy">Venta artículos dentales</h3>
+              <div class="overflow-hidden rounded-3xl border border-slate-200/90 shadow-card">
+                <table class="w-full min-w-0 text-left text-sm">
+                  <thead>
+                    <tr class="bg-gradient-to-r from-dental-blue-dark to-dental-blue text-white">
+                      <th class="px-4 py-3 font-display text-base font-semibold tracking-wide sm:px-5 sm:py-4">Artículo</th>
+                      <th id="price-column-heading-articles" class="px-4 py-3 text-right font-display text-base font-semibold tracking-wide sm:px-5 sm:py-4">Precio USD</th>
+                    </tr>
+                  </thead>
+                  <tbody id="price-table-body-articles" class="divide-y divide-slate-100 bg-white text-slate-700"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulario -->
+    <section class="border-t border-slate-200/80 bg-gradient-to-b from-slate-100 to-white py-16 sm:py-20" id="lead">
+      <div class="mx-auto max-w-lg px-4" id="agenda">
+        <div class="text-center">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-dental-blue">Paso final</p>
+          <h2 class="mt-2 font-display text-3xl font-semibold tracking-tight text-navy">Agendar por WhatsApp</h2>
+          <p class="mt-3 text-sm text-slate-600">Datos claros = respuesta más rápida. Revise los requisitos del día de la cita arriba.</p>
+        </div>
+
+        <form id="wa-form" class="mt-10 space-y-5 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-card sm:p-8" novalidate>
+          <div class="h-1 w-full rounded-full bg-gradient-to-r from-dental-blue via-dental-accent to-dental-blue opacity-90" aria-hidden="true"></div>
+          <div>
+            <label for="nombre" class="block text-sm font-semibold text-slate-800">Nombre completo</label>
+            <input id="nombre" name="nombre" required autocomplete="name" class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-dental-blue focus:bg-white focus:ring-2 focus:ring-dental-blue/20" placeholder="Ej. María Pérez">
+          </div>
+          <div>
+            <label for="telefono" class="block text-sm font-semibold text-slate-800">Teléfono (+53)</label>
+            <div class="mt-2 flex overflow-hidden rounded-xl border border-slate-200 bg-slate-50/80 focus-within:border-dental-blue focus-within:bg-white focus-within:ring-2 focus-within:ring-dental-blue/20">
+              <span class="flex items-center border-r border-slate-200 bg-white/80 px-3.5 text-sm font-medium text-soft-gray-dark">+53</span>
+              <input id="telefono" name="telefono" required inputmode="tel" maxlength="11" class="min-w-0 flex-1 bg-transparent px-4 py-3.5 text-sm outline-none" placeholder="5 XXXX XXXX" aria-describedby="tel-hint">
+            </div>
+            <p id="tel-hint" class="mt-1.5 text-xs text-soft-gray-dark">Solo cifras después del +53.</p>
+          </div>
+          <div>
+            <label for="motivo" class="block text-sm font-semibold text-slate-800">Motivo de consulta</label>
+            <select id="motivo" name="motivo" required class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm outline-none transition focus:border-dental-blue focus:bg-white focus:ring-2 focus:ring-dental-blue/20">
+              <option value="">Seleccione…</option>
+            </select>
+          </div>
+          <div>
+            <label for="descripcion" class="block text-sm font-semibold text-slate-800">Descripción breve</label>
+            <textarea id="descripcion" name="descripcion" rows="3" class="mt-2 w-full resize-y rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-dental-blue focus:bg-white focus:ring-2 focus:ring-dental-blue/20" placeholder="Qué le ocurre o qué desea mejorar"></textarea>
+          </div>
+          <div>
+            <label for="tiempo" class="block text-sm font-semibold text-slate-800">Tiempo con el problema</label>
+            <input id="tiempo" name="tiempo" class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm outline-none transition focus:border-dental-blue focus:bg-white focus:ring-2 focus:ring-dental-blue/20" placeholder="Ej. 2 semanas, 1 año…">
+          </div>
+          <fieldset>
+            <legend class="text-sm font-semibold text-slate-800">Disponibilidad preferida</legend>
+            <div class="mt-3 flex flex-wrap gap-3 text-sm">
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
+                <input type="radio" name="disponibilidad" value="Mañana" class="text-dental-blue focus:ring-dental-blue"> Mañana
+              </label>
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
+                <input type="radio" name="disponibilidad" value="Tarde" class="text-dental-blue focus:ring-dental-blue"> Tarde
+              </label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="text-sm font-semibold text-slate-800">Antecedentes de salud</legend>
+            <div class="mt-3 flex flex-wrap gap-3 text-sm">
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5">
+                <input type="checkbox" name="antecedente" value="Alergias" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Alergias
+              </label>
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5">
+                <input type="checkbox" name="antecedente" value="Hipertensión" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Hipertensión
+              </label>
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5">
+                <input type="checkbox" name="antecedente" value="Diabetes" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Diabetes
+              </label>
+            </div>
+          </fieldset>
+          <div>
+            <label for="estetica" class="block text-sm font-semibold text-slate-800">¿Otra preocupación estética?</label>
+            <input id="estetica" name="estetica" class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm outline-none transition focus:border-dental-blue focus:bg-white focus:ring-2 focus:ring-dental-blue/20" placeholder="Opcional: color, forma, espacios…">
+          </div>
+          <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-dental-blue to-dental-blue-dark py-4 text-sm font-bold text-white shadow-lg shadow-dental-blue/25 transition hover:brightness-110">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Abrir WhatsApp con mi solicitud
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/50 bg-navy py-12 text-center">
+    <p class="font-display text-lg font-semibold text-white">Dari's Dental</p>
+    <p class="mx-auto mt-3 max-w-md px-4 font-display text-base italic leading-snug text-dental-accent/95 sm:text-lg">«El tiempo lo cura todo… menos las caries, esas las cura el Dr. Torres»</p>
+    <p class="mt-3 text-sm text-white/65">Dr. Torres · Estética y salud bucal</p>
+    <p class="mt-6"><a href="#inicio" class="text-sm font-semibold text-dental-accent hover:text-white">Volver arriba</a></p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
