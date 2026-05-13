@@ -7,10 +7,6 @@
   /** Endpoint oficial TRMI El Toque — requiere token (meta el-toque-token o window.__EL_TOQUE_TOKEN__) */
   var EL_TOQUE_TRMI_URL = 'https://tasas.eltoque.com/v1/trmi';
 
-  /**
-   * Precios en USD — misma estructura que menusa.app (servicios vs venta de artículos).
-   * `stockNote`: texto opcional junto al nombre (ej. agotado).
-   */
   var SERVICIOS_DENTALES_USD = [
     { name: 'Limpiezas profundas', usd: 10 },
     { name: 'Blanqueamientos dentales', usd: 20 },
@@ -28,8 +24,54 @@
     { name: 'Mantenimiento de diseños de sonrisa', usd: 15 }
   ];
 
+  /** Textos de la modal por servicio (clave = data-service-id en index.html). */
+  var SERVICIOS_MODAL_DESC = {
+    reconstrucciones:
+      'Carillas en dientes anteriores fracturados y dientes con cambios de coloración por trauma o TPR. Reconstrucciones grandes en molares y dientes afectados funcional y estéticamente',
+    'limpieza-blanqueamiento':
+      'Profesionalmente recomiendo un máximo de 3 sesiones y un mínimo de 2 sesiones para lograr un resultado satisfactorio. Nota importante: Siempre para realizar un blanqueamiento en la primera sesion hay que realizar antes una limpieza dental, sobre un diente sucio o manchado no se puede realizar',
+    'puentes-fijos':
+      'Reconstrucción de puente fijo en molares y en espacios por dientes perdidos tras extracciones previas, una vez la zona cicatrizada y lista para rehabilitar. En consulta valoramos pilares, longitud del puente y oclusión; el alcance y el coste dependen de cada caso.',
+    'carillas-faciales':
+      'Las carillas faciales mejoran forma, tamaño y color de los dientes visibles al hablar o sonreír. En consulta definimos si su caso encaja con carillas de composite o de porcelana, el número de piezas y el protocolo. El resultado busca naturalidad y armonía con su rostro; el plan y el coste dependen de la valoración clínica.',
+    'diseno-sonrisa':
+      'Los diseños de sonrisa tienen una referencia orientativa de 42 USD por diente; el paciente escoge el tono que desea para cada pieza. Como en todo tratamiento, el resultado se cuida en el día a día: ahí está cerca del 80% del éxito, en el mantenimiento que cada persona dedica en casa. El otro 20% lo aportamos nosotros con materiales de calidad y un trabajo clínico del que esperamos que quede muy satisfecho.'
+  };
+
+  /**
+   * Galería de la modal por servicio: { src, alt }[]. Si falta una clave, se usa solo la foto de la tarjeta.
+   * Sustituya URLs por las fotos reales de la clínica.
+   */
+  var SERVICIOS_MODAL_IMAGES = {
+    reconstrucciones: [
+      { src: 'images/reconstruccion-1.jpg', alt: 'Reconstrucciones — caso clínico' },
+      { src: 'images/reconstruccion-2.jpg', alt: 'Reconstrucciones — detalle' },
+      { src: 'images/reconstruccion-3.jpg', alt: 'Reconstrucciones — valoración' },
+      { src: 'images/reconstruccion-4.jpg', alt: 'Reconstrucciones — resultado' }
+    ],
+    'limpieza-blanqueamiento': [
+      { src: 'images/limpieza-blanqueamiento-1.jpg', alt: 'Limpieza y blanqueamiento — tratamiento' },
+      { src: 'images/limpieza-blanqueamiento-2.jpg', alt: 'Limpieza y blanqueamiento — seguimiento' }
+    ],
+    'puentes-fijos': [{ src: 'images/puentes-fijos.jpg', alt: 'Puentes fijos — rehabilitación' }],
+    'carillas-faciales': [
+      { src: 'images/carillas-faciales-1.jpg', alt: 'Carillas estéticas — vista 1' },
+      { src: 'images/carillas-faciales-2.jpg', alt: 'Carillas estéticas — vista 2' },
+      { src: 'images/carillas-faciales-3.jpg', alt: 'Carillas estéticas — vista 3' },
+      { src: 'images/carillas-faciales-4.jpg', alt: 'Carillas estéticas — vista 4' }
+    ],
+    'diseno-sonrisa': [
+      { src: 'images/dis-sonrisa-1.jpg', alt: 'Diseños de sonrisa — vista 1' },
+      { src: 'images/dis-sonrisa-2.jpg', alt: 'Diseños de sonrisa — vista 2' },
+      { src: 'images/dis-sonrisa-3.jpg', alt: 'Diseños de sonrisa — vista 3' },
+      { src: 'images/dis-sonrisa-4.jpg', alt: 'Diseños de sonrisa — vista 4' },
+      { src: 'images/dis-sonrisa-5.jpg', alt: 'Diseños de sonrisa — vista 5' },
+      { src: 'images/dis-sonrisa-6.jpg', alt: 'Diseños de sonrisa — vista 6' }
+    ]
+  };
+
   var ARTICULOS_DENTALES_USD = [
-    { name: 'Férulas dentales', usd: 10, stockNote: 'Agotado' },
+    { name: 'Férulas dentales', usd: 10},
     { name: 'Sets de higiene para aparatos fijos', usd: 8 },
     { name: 'Enjuague bucal Listerine 1 L (1000 ml)', usd: 18 },
     { name: 'Enjuague bucal pequeño (95 ml)', usd: 3 },
@@ -40,7 +82,8 @@
     currency: 'USD',
     cupPerUsd: null,
     rateError: null,
-    rateUpdated: null
+    rateUpdated: null,
+    rateLoading: true
   };
 
   function getElToqueToken() {
@@ -112,19 +155,24 @@
 
   function setRateLabel() {
     var el = document.getElementById('rate-label');
+    var retry = document.getElementById('rate-retry');
     if (!el) return;
     if (state.cupPerUsd != null) {
       var extra = state.rateUpdated ? ' · Actualización API: ' + state.rateUpdated : '';
       el.textContent = 'Tasa de cambio según El Toque: 1 USD ≈ ' + formatCup(state.cupPerUsd) + extra;
       el.classList.remove('text-red-600');
       el.classList.add('text-soft-gray-dark');
+      if (retry) retry.classList.add('hidden');
+    } else if (state.rateLoading) {
+      el.textContent = 'Tasa de cambio según El Toque: cargando…';
+      el.classList.remove('text-red-600');
+      el.classList.add('text-soft-gray-dark');
+      if (retry) retry.classList.add('hidden');
     } else {
-      el.textContent =
-        'Tasa de cambio según El Toque: no disponible en este momento.' +
-        (state.rateError ? ' (' + state.rateError + ')' : '') +
-        ' Solicite token en tasas-token.eltoque.com y colóquelo en la meta «el-toque-token» del index.html, o revise CORS/red.';
+      el.textContent = 'Error al cargar la tasa de cambio';
       el.classList.add('text-red-600');
       el.classList.remove('text-soft-gray-dark');
+      if (retry) retry.classList.remove('hidden');
     }
   }
 
@@ -313,6 +361,24 @@
         renderPrices();
       });
     }
+
+    var retryBtn = document.getElementById('rate-retry');
+    if (retryBtn) {
+      retryBtn.addEventListener('click', function () {
+        state.rateLoading = true;
+        state.rateError = null;
+        setRateLabel();
+        fetchElToqueRate().finally(function () {
+          state.rateLoading = false;
+          setRateLabel();
+          setCurrencyButtons();
+          if (state.currency === 'CUP' && state.cupPerUsd == null) {
+            state.currency = 'USD';
+          }
+          renderPrices();
+        });
+      });
+    }
   }
 
   function normalizePhoneDigits(input) {
@@ -412,6 +478,143 @@
     }
   }
 
+  function initServiceModal() {
+    var root = document.getElementById('service-modal');
+    var backdrop = document.getElementById('service-modal-backdrop');
+    var closeX = document.getElementById('service-modal-close-x');
+    var closeBtn = document.getElementById('service-modal-close-btn');
+    var titleEl = document.getElementById('service-modal-title');
+    var imgEl = document.getElementById('service-modal-img');
+    var descEl = document.getElementById('service-modal-desc');
+    var prevBtn = document.getElementById('service-modal-prev');
+    var nextBtn = document.getElementById('service-modal-next');
+    if (!root || !titleEl || !imgEl || !descEl) return;
+
+    var lastFocus = null;
+    var gallerySlides = [];
+    var galleryIndex = 0;
+
+    function updateCarouselNav() {
+      var n = gallerySlides.length;
+      if (!prevBtn || !nextBtn) return;
+      if (n <= 1) {
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+        return;
+      }
+      prevBtn.classList.toggle('hidden', galleryIndex <= 0);
+      nextBtn.classList.toggle('hidden', galleryIndex >= n - 1);
+    }
+
+    function showSlide(i) {
+      if (!gallerySlides.length || i < 0 || i >= gallerySlides.length) return;
+      galleryIndex = i;
+      var s = gallerySlides[galleryIndex];
+      if (s && s.src) {
+        imgEl.src = s.src;
+        imgEl.alt = s.alt || '';
+      }
+      updateCarouselNav();
+    }
+
+    function openFromButton(btn) {
+      var id = btn.getAttribute('data-service-id');
+      if (!id) return;
+      var article = btn.closest('article.service-card');
+      if (!article) return;
+      var cardImg = article.querySelector('img.service-card-img');
+      var titleNode = article.querySelector('.service-card-title');
+      var title = titleNode ? titleNode.textContent.trim() : '';
+      var desc =
+        SERVICIOS_MODAL_DESC[id] ||
+        'Para detalles y valoración personalizada, escríbanos por WhatsApp o consulte la lista de precios en esta página.';
+
+      var slides = SERVICIOS_MODAL_IMAGES[id];
+      if (!slides || !slides.length) {
+        slides =
+          cardImg && cardImg.getAttribute('src')
+            ? [{ src: cardImg.getAttribute('src'), alt: cardImg.getAttribute('alt') || title }]
+            : [];
+      }
+
+      gallerySlides = slides;
+      titleEl.textContent = title;
+      descEl.textContent = desc;
+      if (!gallerySlides.length) {
+        imgEl.removeAttribute('src');
+        imgEl.alt = title || '';
+        updateCarouselNav();
+      } else {
+        showSlide(0);
+      }
+
+      lastFocus = document.activeElement;
+      root.classList.remove('hidden');
+      root.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overflow-hidden');
+
+      if (closeX) closeX.focus();
+    }
+
+    function closeModal() {
+      root.classList.add('hidden');
+      root.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('overflow-hidden');
+      gallerySlides = [];
+      galleryIndex = 0;
+      if (prevBtn) prevBtn.classList.add('hidden');
+      if (nextBtn) nextBtn.classList.add('hidden');
+      if (lastFocus && typeof lastFocus.focus === 'function') {
+        try {
+          lastFocus.focus();
+        } catch (e) {
+          /* ignore */
+        }
+      }
+      lastFocus = null;
+    }
+
+    document.addEventListener('click', function (e) {
+      var openBtn = e.target && e.target.closest && e.target.closest('.service-modal-open');
+      if (!openBtn) return;
+      e.preventDefault();
+      openFromButton(openBtn);
+    });
+
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+    if (closeX) closeX.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        showSlide(galleryIndex - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        showSlide(galleryIndex + 1);
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (root.classList.contains('hidden')) return;
+      if (e.key === 'Escape') {
+        closeModal();
+        return;
+      }
+      if (gallerySlides.length <= 1) return;
+      if (e.key === 'ArrowLeft' && galleryIndex > 0) {
+        e.preventDefault();
+        showSlide(galleryIndex - 1);
+      } else if (e.key === 'ArrowRight' && galleryIndex < gallerySlides.length - 1) {
+        e.preventDefault();
+        showSlide(galleryIndex + 1);
+      }
+    });
+  }
+
   function initForm() {
     var form = document.getElementById('wa-form');
     if (!form) return;
@@ -448,6 +651,7 @@
   function boot() {
     populateAgendaMotivoSelect();
     initMobileNav();
+    initServiceModal();
     initCurrencyUi();
     initForm();
     renderPrices();
@@ -455,9 +659,12 @@
     setRateLabel();
 
     fetchElToqueRate().finally(function () {
+      state.rateLoading = false;
       setRateLabel();
       setCurrencyButtons();
-      if (state.currency === 'CUP') state.currency = 'USD';
+      if (state.currency === 'CUP' && state.cupPerUsd == null) {
+        state.currency = 'USD';
+      }
       renderPrices();
     });
   }

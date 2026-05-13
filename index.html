@@ -9,8 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="preload" href="images/logo.png" as="image">
   <link rel="preload" href="images/hero-mobile.jpg" as="image" media="(max-width: 767px)">
   <link rel="preload" href="images/hero-desktop.jpg" as="image" media="(min-width: 768px)">
@@ -48,6 +46,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      #service-modal:not(.hidden) { animation: none !important; }
     }
     .hero-bg {
       background-image:
@@ -76,7 +75,12 @@
     details.faq-item[open] .faq-chevron { transform: rotate(180deg); }
     details.faq-item[open] { box-shadow: 0 12px 40px -16px rgba(0, 119, 182, 0.18); }
     .service-card-img { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
-    article.service-card:hover .service-card-img { transform: scale(1.06); }
+    article.service-card:hover .service-card-img { transform: scale(1.02); }
+    #service-modal:not(.hidden) { animation: service-modal-in 0.25s ease-out; }
+    @keyframes service-modal-in {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
     #nav-mobile-panel:not(.hidden) { animation: nav-panel-in 0.2s ease-out; }
     @keyframes nav-panel-in {
       from { opacity: 0; transform: translateY(-6px); }
@@ -332,21 +336,18 @@
             <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-dental-blue text-white shadow-md shadow-dental-blue/30" aria-hidden="true">
               <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             </div>
-            <div>
+            <div class="min-w-0 flex-1">
               <h3 class="font-display text-xl font-semibold text-navy">Requisitos el día de la cita</h3>
-              <ul class="mt-4 space-y-3 text-sm text-slate-700">
-                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dental-blue" aria-hidden="true"></span> Traer <strong class="text-slate-900">toallita o pañuelo</strong> para saliva.</li>
-                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dental-blue" aria-hidden="true"></span> <strong class="text-slate-900">Desayunar antes</strong> de la cita (salvo otra indicación acordada).</li>
-                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dental-blue" aria-hidden="true"></span> Si es hipertenso: <strong class="text-slate-900">medicación de la presión</strong> según su pauta habitual.</li>
-                <li class="flex gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dental-blue" aria-hidden="true"></span> <strong class="text-slate-900">Puntualidad absoluta</strong>; el retraso puede implicar reprogramación.</li>
-              </ul>
+              <p class="mt-4 max-w-prose text-sm leading-relaxed text-slate-700">
+                Traiga <strong class="text-slate-900">toallita o pañuelo</strong> para la saliva. <br> <br> <strong class="text-slate-900">Desayune antes</strong> de la cita, salvo otra indicación acordada con el consultorio. <br> <br> Si es hipertenso, tome su <strong class="text-slate-900">medicación para la presión</strong> según la pauta habitual. <br> <br> La <strong class="text-slate-900">puntualidad es absoluta</strong>: un retraso puede implicar reprogramar la visita.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Servicios destacados: sustituya el atributo src de cada <img> por las fotos que le envíen (URL o ruta local). -->
+    <!-- Servicios destacados: data-service-id debe coincidir con SERVICIOS_MODAL_DESC / SERVICIOS_MODAL_IMAGES en script.js. -->
     <section class="bg-slate-100 py-16 sm:py-20" id="servicios">
       <div class="mx-auto max-w-5xl px-4">
         <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
@@ -361,34 +362,56 @@
           <article class="service-card group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover">
             <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
               <div class="absolute left-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 font-display text-sm font-bold text-dental-blue shadow">01</div>
-              <img src="https://images.unsplash.com/photo-1606811971618-448beabc57e8?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Higiene dental y limpieza" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
+              <img src="images/reconstruccion-1.jpg" alt="Reconstrucciones dentales estéticas" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
               <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent"></div>
-              <p class="absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Limpieza e higiene</p>
+              <p class="service-card-title pointer-events-none absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Reconstrucciones</p>
             </div>
             <div class="p-5">
-              <p class="text-sm leading-relaxed text-slate-600">Limpieza profunda en la primera visita y mantenimiento con estándares clínicos.</p>
+              <button type="button" class="service-modal-open w-full rounded-2xl border border-dental-blue/25 bg-dental-blue/5 px-4 py-3 text-sm font-semibold text-dental-blue-dark transition hover:border-dental-blue/50 hover:bg-dental-blue/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/40" data-service-id="reconstrucciones">Ver más información</button>
             </div>
           </article>
           <article class="service-card group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover">
             <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
               <div class="absolute left-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 font-display text-sm font-bold text-dental-blue shadow">02</div>
-              <img src="https://images.unsplash.com/photo-1599813397634-43e56cbf90d5?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Ortodoncia y brackets" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
+              <img src="images/limpieza-blanqueamiento-1.jpg" alt="Limpieza dental y blanqueamiento" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
               <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent"></div>
-              <p class="absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Ortodoncia</p>
+              <p class="service-card-title pointer-events-none absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Limpieza y blanqueamiento</p>
             </div>
             <div class="p-5">
-              <p class="text-sm leading-relaxed text-slate-600">Domingos dedicados a brackets y control del tratamiento.</p>
+              <button type="button" class="service-modal-open w-full rounded-2xl border border-dental-blue/25 bg-dental-blue/5 px-4 py-3 text-sm font-semibold text-dental-blue-dark transition hover:border-dental-blue/50 hover:bg-dental-blue/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/40" data-service-id="limpieza-blanqueamiento">Ver más información</button>
             </div>
           </article>
           <article class="service-card group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover">
             <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
               <div class="absolute left-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 font-display text-sm font-bold text-dental-blue shadow">03</div>
-              <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47265fd?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Diseño de sonrisa" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
+              <img src="images/puentes-fijos.jpg" alt="Puentes fijos dentales" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
               <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent"></div>
-              <p class="absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Diseño de sonrisa</p>
+              <p class="service-card-title pointer-events-none absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Puentes fijos</p>
             </div>
             <div class="p-5">
-              <p class="text-sm leading-relaxed text-slate-600">Estética dental integrada al rostro y a sus expectativas.</p>
+              <button type="button" class="service-modal-open w-full rounded-2xl border border-dental-blue/25 bg-dental-blue/5 px-4 py-3 text-sm font-semibold text-dental-blue-dark transition hover:border-dental-blue/50 hover:bg-dental-blue/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/40" data-service-id="puentes-fijos">Ver más información</button>
+            </div>
+          </article>
+          <article class="service-card group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover">
+            <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
+              <div class="absolute left-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 font-display text-sm font-bold text-dental-blue shadow">04</div>
+              <img src="images/carillas-faciales-1.jpg" alt="Servicio destacado 4" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent"></div>
+              <p class="service-card-title pointer-events-none absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Carillas Estéticas</p>
+            </div>
+            <div class="p-5">
+              <button type="button" class="service-modal-open w-full rounded-2xl border border-dental-blue/25 bg-dental-blue/5 px-4 py-3 text-sm font-semibold text-dental-blue-dark transition hover:border-dental-blue/50 hover:bg-dental-blue/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/40" data-service-id="carillas-faciales">Ver más información</button>
+            </div>
+          </article>
+          <article class="service-card group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-card transition hover:-translate-y-1 hover:shadow-card-hover">
+            <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
+              <div class="absolute left-4 top-4 z-10 rounded-full bg-white/95 px-3 py-1 font-display text-sm font-bold text-dental-blue shadow">05</div>
+              <img src="images/dis-sonrisa-1.jpg" alt="Diseños de sonrisa — estética dental" class="service-card-img h-full w-full object-cover" width="900" height="675" loading="lazy" decoding="async">
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent"></div>
+              <p class="service-card-title pointer-events-none absolute bottom-4 left-4 right-4 font-display text-lg font-semibold text-white">Diseños de sonrisa</p>
+            </div>
+            <div class="p-5">
+              <button type="button" class="service-modal-open w-full rounded-2xl border border-dental-blue/25 bg-dental-blue/5 px-4 py-3 text-sm font-semibold text-dental-blue-dark transition hover:border-dental-blue/50 hover:bg-dental-blue/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/40" data-service-id="diseno-sonrisa">Ver más información</button>
             </div>
           </article>
         </div>
@@ -441,7 +464,10 @@
               <button type="button" id="currency-usd" class="rounded-full px-5 py-2.5 text-sm font-semibold">USD</button>
               <button type="button" id="currency-cup" class="rounded-full px-5 py-2.5 text-sm font-medium">CUP</button>
             </div>
-            <p id="rate-label" class="w-full text-left text-xs leading-relaxed text-soft-gray-dark md:max-w-xs md:text-right lg:max-w-sm" aria-live="polite">Tasa de cambio según El Toque: cargando…</p>
+            <div class="flex w-full flex-col items-start gap-2 md:max-w-xs md:items-end lg:max-w-sm">
+              <p id="rate-label" class="text-left text-xs leading-relaxed text-soft-gray-dark md:text-right" aria-live="polite">Tasa de cambio según El Toque: cargando…</p>
+              <button type="button" id="rate-retry" class="hidden inline-flex items-center justify-center rounded-full border border-dental-blue/30 bg-white px-4 py-2 text-xs font-semibold text-dental-blue-dark shadow-sm transition hover:border-dental-blue/50 hover:bg-dental-blue/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/40" aria-label="Reintentar cargar la tasa de cambio">Reintentar</button>
+            </div>
           </div>
         </div>
 
@@ -577,6 +603,45 @@
       </div>
     </section>
   </main>
+
+  <div id="service-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
+    <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
+      <button type="button" id="service-modal-backdrop" class="absolute inset-0 bg-navy/55 backdrop-blur-[2px]" aria-label="Cerrar detalle del servicio"></button>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="service-modal-title"
+        class="relative z-10 flex max-h-[min(90vh,40rem)] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-2xl ring-1 ring-slate-200/60">
+        <div class="flex items-start justify-between gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
+          <h2 id="service-modal-title" class="font-display text-xl font-semibold tracking-tight text-navy sm:text-2xl"></h2>
+          <button type="button" id="service-modal-close-x" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600 transition hover:border-dental-blue/30 hover:bg-dental-blue/5 hover:text-dental-blue-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/40" aria-label="Cerrar">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+        <div class="min-h-0 flex-1 overflow-y-auto px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
+          <div class="relative flex min-h-[12rem] max-h-[min(52vh,28rem)] w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-200 ring-1 ring-slate-200/80">
+            <img id="service-modal-img" src="" alt="" class="h-auto max-h-[min(52vh,28rem)] w-full object-cover" width="900" height="675" decoding="async">
+            <button
+              type="button"
+              id="service-modal-prev"
+              class="absolute left-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-white/80 bg-white/95 p-2.5 text-navy shadow-md transition hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/50 sm:left-3"
+              aria-label="Foto anterior">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button
+              type="button"
+              id="service-modal-next"
+              class="absolute right-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-white/80 bg-white/95 p-2.5 text-navy shadow-md transition hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/50 sm:right-3"
+              aria-label="Foto siguiente">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+          <p id="service-modal-desc" class="mt-5 text-sm leading-relaxed text-slate-600 sm:text-base"></p>
+          <button type="button" id="service-modal-close-btn" class="mt-6 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm font-semibold text-navy transition hover:border-dental-blue/40 hover:bg-white hover:text-dental-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-dental-blue/40">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="border-t border-slate-800/50 bg-navy py-12 text-center">
     <p class="font-display text-lg font-semibold text-white">Dari's Dental</p>
