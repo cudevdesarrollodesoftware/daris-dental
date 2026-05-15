@@ -71,7 +71,7 @@
   };
 
   var ARTICULOS_DENTALES_USD = [
-    { name: 'Férulas dentales', usd: 10},
+    { name: 'Férulas dentales', usd: 30},
     { name: 'Sets de higiene para aparatos fijos', usd: 8 },
     { name: 'Enjuague bucal Listerine 1 L (1000 ml)', usd: 18 },
     { name: 'Enjuague bucal pequeño (95 ml)', usd: 3 },
