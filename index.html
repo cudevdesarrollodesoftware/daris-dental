@@ -535,7 +535,7 @@
         <div class="text-center">
           <p class="text-xs font-bold uppercase tracking-[0.2em] text-dental-blue">Paso final</p>
           <h2 class="mt-2 font-display text-3xl font-semibold tracking-tight text-navy">Agendar por WhatsApp</h2>
-          <p class="mt-3 text-sm text-slate-600">Datos claros = respuesta más rápida. Revise los requisitos del día de la cita arriba.</p>
+          <p class="mt-3 text-sm text-slate-600">Complete el formulario y abriremos WhatsApp con su solicitud; desde ahí coordinamos la cita. Revise los requisitos del día de la cita arriba.</p>
         </div>
 
         <form id="wa-form" class="mt-10 space-y-5 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-card sm:p-8" novalidate>
@@ -543,14 +543,6 @@
           <div>
             <label for="nombre" class="block text-sm font-semibold text-slate-800">Nombre completo</label>
             <input id="nombre" name="nombre" required autocomplete="name" class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-dental-blue focus:bg-white focus:ring-2 focus:ring-dental-blue/20" placeholder="Ej. María Pérez">
-          </div>
-          <div>
-            <label for="telefono" class="block text-sm font-semibold text-slate-800">Teléfono (+53)</label>
-            <div class="mt-2 flex overflow-hidden rounded-xl border border-slate-200 bg-slate-50/80 focus-within:border-dental-blue focus-within:bg-white focus-within:ring-2 focus-within:ring-dental-blue/20">
-              <span class="flex items-center border-r border-slate-200 bg-white/80 px-3.5 text-sm font-medium text-soft-gray-dark">+53</span>
-              <input id="telefono" name="telefono" required inputmode="tel" maxlength="11" class="min-w-0 flex-1 bg-transparent px-4 py-3.5 text-sm outline-none" placeholder="5 XXXX XXXX" aria-describedby="tel-hint">
-            </div>
-            <p id="tel-hint" class="mt-1.5 text-xs text-soft-gray-dark">Solo cifras después del +53.</p>
           </div>
           <div>
             <label for="motivo" class="block text-sm font-semibold text-slate-800">Motivo de consulta</label>
@@ -566,8 +558,32 @@
             <label for="tiempo" class="block text-sm font-semibold text-slate-800">Tiempo con el problema</label>
             <input id="tiempo" name="tiempo" class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm outline-none transition focus:border-dental-blue focus:bg-white focus:ring-2 focus:ring-dental-blue/20" placeholder="Ej. 2 semanas, 1 año…">
           </div>
+          <fieldset id="dias-preferidos-fieldset">
+            <legend class="text-sm font-semibold text-slate-800">Días con mayor disponibilidad</legend>
+            <p class="mt-1 text-xs text-soft-gray-dark">Marque uno o más. Atención: mar–sáb (general) y dom (ortodoncia); lunes cerrado al público.</p>
+            <div class="mt-3 grid grid-cols-2 gap-2 text-sm sm:grid-cols-3">
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
+                <input type="checkbox" name="dia-preferido" value="Martes" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Martes
+              </label>
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
+                <input type="checkbox" name="dia-preferido" value="Miércoles" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Miércoles
+              </label>
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
+                <input type="checkbox" name="dia-preferido" value="Jueves" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Jueves
+              </label>
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
+                <input type="checkbox" name="dia-preferido" value="Viernes" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Viernes
+              </label>
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
+                <input type="checkbox" name="dia-preferido" value="Sábado" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Sábado
+              </label>
+              <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
+                <input type="checkbox" name="dia-preferido" value="Domingo" class="rounded border-slate-300 text-dental-blue focus:ring-dental-blue"> Domingo
+              </label>
+            </div>
+          </fieldset>
           <fieldset>
-            <legend class="text-sm font-semibold text-slate-800">Disponibilidad preferida</legend>
+            <legend class="text-sm font-semibold text-slate-800">Horario preferido del día</legend>
             <div class="mt-3 flex flex-wrap gap-3 text-sm">
               <label class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 transition has-[:checked]:border-dental-blue has-[:checked]:bg-dental-blue/5 has-[:checked]:text-dental-blue-dark">
                 <input type="radio" name="disponibilidad" value="Mañana" class="text-dental-blue focus:ring-dental-blue"> Mañana

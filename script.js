@@ -33,7 +33,7 @@
     'puentes-fijos':
       'Reconstrucción de puente fijo en molares y en espacios por dientes perdidos tras extracciones previas, una vez la zona cicatrizada y lista para rehabilitar. En consulta valoramos pilares, longitud del puente y oclusión; el alcance y el coste dependen de cada caso.',
     'carillas-faciales':
-      'Las carillas faciales mejoran forma, tamaño y color de los dientes visibles al hablar o sonreír. En consulta definimos si su caso encaja con carillas de composite o de porcelana, el número de piezas y el protocolo. El resultado busca naturalidad y armonía con su rostro; el plan y el coste dependen de la valoración clínica.',
+      'Las carillas dentales mejoran forma, tamaño y color de los dientes visibles al hablar o sonreír. En consulta definimos si su caso encaja con carillas de composite o de porcelana, el número de piezas y el protocolo. El resultado busca naturalidad y armonía con su rostro; el plan y el coste dependen de la valoración clínica.',
     'diseno-sonrisa':
       'Los diseños de sonrisa tienen una referencia orientativa de 42 USD por diente; el paciente escoge el tono que desea para cada pieza. Como en todo tratamiento, el resultado se cuida en el día a día: ahí está cerca del 80% del éxito, en el mantenimiento que cada persona dedica en casa. El otro 20% lo aportamos nosotros con materiales de calidad y un trabajo clínico del que esperamos que quede muy satisfecho.'
   };
@@ -381,23 +381,20 @@
     }
   }
 
-  function normalizePhoneDigits(input) {
-    var d = String(input || '').replace(/\D/g, '');
-    if (d.startsWith('53')) d = d.slice(2);
-    return d;
-  }
-
   function buildWhatsAppMessage(form) {
     var nombre = (form.nombre && form.nombre.value.trim()) || '';
-    var tel = normalizePhoneDigits(form.telefono && form.telefono.value);
     var motivo = (form.motivo && form.motivo.value) || '';
     var descripcion = (form.descripcion && form.descripcion.value.trim()) || '';
     var tiempo = (form.tiempo && form.tiempo.value.trim()) || '';
     var estetica = (form.estetica && form.estetica.value.trim()) || '';
 
-    var disp = '';
+    var dias = [];
+    var diaBoxes = form.querySelectorAll('input[name="dia-preferido"]:checked');
+    for (var d = 0; d < diaBoxes.length; d++) dias.push(diaBoxes[d].value);
+
+    var horario = '';
     var radios = form.querySelectorAll('input[name="disponibilidad"]:checked');
-    if (radios.length) disp = radios[0].value;
+    if (radios.length) horario = radios[0].value;
 
     var ants = [];
     var boxes = form.querySelectorAll('input[name="antecedente"]:checked');
@@ -407,15 +404,15 @@
       '*Nueva solicitud — Dari\'s Dental*',
       '',
       '*Nombre:* ' + nombre,
-      '*Teléfono:* +53' + tel,
       '*Motivo:* ' + motivo,
       '*Descripción:* ' + (descripcion || '—'),
       '*Tiempo con el problema:* ' + (tiempo || '—'),
-      '*Disponibilidad:* ' + (disp || '—'),
+      '*Días con mayor disponibilidad:* ' + (dias.length ? dias.join(', ') : '—'),
+      '*Horario preferido:* ' + (horario || '—'),
       '*Antecedentes:* ' + (ants.length ? ants.join(', ') : 'Ninguno declarado'),
       '*Otra preocupación estética:* ' + (estetica || '—'),
       '',
-      '_Mensaje generado desde dari.dental (web)._'
+      '_Solicitud enviada desde la web. Coordinaremos la cita por este chat._'
     ];
     return lines.join('\n');
   }
@@ -623,22 +620,26 @@
       e.preventDefault();
 
       var nombre = form.nombre.value.trim();
-      var tel = normalizePhoneDigits(form.telefono.value);
       var motivo = form.motivo.value;
+      var diasMarcados = form.querySelectorAll('input[name="dia-preferido"]:checked');
 
       if (!nombre) {
         alert('Indique su nombre completo.');
         form.nombre.focus();
         return;
       }
-      if (tel.length < 8) {
-        alert('Indique un teléfono válido (cuba, +53).');
-        form.telefono.focus();
-        return;
-      }
       if (!motivo) {
         alert('Seleccione el motivo de consulta.');
         form.motivo.focus();
+        return;
+      }
+      if (!diasMarcados.length) {
+        alert('Marque al menos un día con mayor disponibilidad.');
+        var diasFieldset = document.getElementById('dias-preferidos-fieldset');
+        if (diasFieldset) {
+          var firstDia = diasFieldset.querySelector('input[name="dia-preferido"]');
+          if (firstDia) firstDia.focus();
+        }
         return;
       }
 
