@@ -97,18 +97,25 @@
   }
 
   /**
-   * Intenta obtener la mediana USD→CUP desde distintas formas de respuesta de la API.
+   * Extrae la mediana USD→CUP del JSON oficial de El Toque (GET /v1/trmi).
+   * Formato real: { tasas: { USD: 442, ECU: 500, MLC: 210, ... }, date, hour, minutes, seconds }
+   * Se conservan respaldos por si la API evoluciona.
    */
   function extractCupPerUsd(data) {
     if (data == null || typeof data !== 'object') return null;
+
+    if (data.tasas && typeof data.tasas === 'object') {
+      var n = Number(data.tasas.USD);
+      if (!isNaN(n) && n > 0) return n;
+    }
 
     if (typeof data.USD === 'number' && data.USD > 0) return data.USD;
     if (typeof data.usd === 'number' && data.usd > 0) return data.usd;
 
     var usdBlock = data.USD || data.usd || data.Usd;
     if (usdBlock && typeof usdBlock === 'object') {
-      var n = pickNumeric(usdBlock, ['median', 'median_24h', 'value', 'trmi', 'price', 'cup']);
-      if (n != null) return n;
+      var nn = pickNumeric(usdBlock, ['median', 'median_24h', 'value', 'trmi', 'price', 'cup']);
+      if (nn != null) return nn;
     }
 
     var arr = data.currencies || data.rates || data.data;
@@ -124,14 +131,22 @@
       }
     }
 
-    if (data.trmi && typeof data.trmi === 'object') {
-      var t = data.trmi.USD || data.trmi.usd;
-      if (t && typeof t === 'object') {
-        var t2 = pickNumeric(t, ['median', 'value', 'cup']);
-        if (t2 != null) return t2;
-      }
-    }
+    return null;
+  }
 
+  /** Construye una etiqueta legible a partir de los campos date/hour/minutes/seconds de la API. */
+  function extractRateUpdatedAt(data) {
+    if (!data || typeof data !== 'object') return null;
+    if (typeof data.date === 'string' && typeof data.hour === 'number') {
+      var pad = function (x) {
+        var s = String(x);
+        return s.length < 2 ? '0' + s : s;
+      };
+      return data.date + ' ' + pad(data.hour) + ':' + pad(data.minutes) + ':' + pad(data.seconds);
+    }
+    if (data.updated_at) return data.updated_at;
+    if (data.updatedAt) return data.updatedAt;
+    if (typeof data.date === 'string') return data.date;
     return null;
   }
 
@@ -319,8 +334,15 @@
 
   function fetchElToqueRate() {
     var token = getElToqueToken();
-    var headers = { Accept: 'application/json' };
-    if (token) headers.Authorization = 'Bearer ' + token;
+    if (!token) {
+      state.cupPerUsd = null;
+      state.rateError = 'Token de El Toque no configurado';
+      return Promise.resolve();
+    }
+    var headers = {
+      accept: '*/*',
+      Authorization: 'Bearer ' + token
+    };
 
     return fetch(EL_TOQUE_TRMI_URL, { headers: headers, cache: 'no-store' })
       .then(function (res) {
@@ -332,10 +354,7 @@
         if (cup == null) throw new Error('Formato de respuesta no reconocido');
         state.cupPerUsd = cup;
         state.rateError = null;
-        if (json.updated_at) state.rateUpdated = json.updated_at;
-        else if (json.updatedAt) state.rateUpdated = json.updatedAt;
-        else if (json.date) state.rateUpdated = json.date;
-        else state.rateUpdated = null;
+        state.rateUpdated = extractRateUpdatedAt(json);
       })
       .catch(function (err) {
         state.cupPerUsd = null;
