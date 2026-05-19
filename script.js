@@ -4,8 +4,12 @@
   /** WhatsApp de la clínica (sin +) */
   var WA_NUMBER = '5354783902';
 
-  /** Endpoint oficial TRMI El Toque — requiere token (meta el-toque-token o window.__EL_TOQUE_TOKEN__) */
-  var EL_TOQUE_TRMI_URL = 'https://tasas.eltoque.com/v1/trmi';
+  /**
+   * Proxy propio (Cloudflare Worker) que llama a https://tasas.eltoque.com/v1/trmi
+   * con el token guardado como Secret en Cloudflare y añade los headers CORS
+   * para el dominio público. No incluir aquí el token de El Toque.
+   */
+  var EL_TOQUE_TRMI_URL = 'https://daris-dental.cudevdesarrollodesoftware.workers.dev/';
 
   var SERVICIOS_DENTALES_USD = [
     { name: 'Limpiezas profundas', usd: 10 },
@@ -85,16 +89,6 @@
     rateUpdated: null,
     rateLoading: true
   };
-
-  function getElToqueToken() {
-    var m = document.querySelector('meta[name="el-toque-token"]');
-    var fromMeta = m && m.getAttribute('content');
-    if (fromMeta && fromMeta.trim()) return fromMeta.trim();
-    if (typeof window !== 'undefined' && window.__EL_TOQUE_TOKEN__) {
-      return String(window.__EL_TOQUE_TOKEN__).trim();
-    }
-    return '';
-  }
 
   /**
    * Extrae la mediana USD→CUP del JSON oficial de El Toque (GET /v1/trmi).
@@ -333,18 +327,7 @@
   }
 
   function fetchElToqueRate() {
-    var token = getElToqueToken();
-    if (!token) {
-      state.cupPerUsd = null;
-      state.rateError = 'Token de El Toque no configurado';
-      return Promise.resolve();
-    }
-    var headers = {
-      accept: '*/*',
-      Authorization: 'Bearer ' + token
-    };
-
-    return fetch(EL_TOQUE_TRMI_URL, { headers: headers, cache: 'no-store' })
+    return fetch(EL_TOQUE_TRMI_URL, { headers: { Accept: 'application/json' } })
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
